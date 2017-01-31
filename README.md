@@ -1,12 +1,20 @@
-# Honeycomb Batch JSON Logstash Plugin
+# logstash-output-honeycomb_json_batch [![Build Status](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch.svg?branch=master)](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch)
+
+A logstash plugin for interacting with [Honeycomb](https://honeycomb.io) at high volumes. (See here for more information about [using Honeycomb](https://honeycomb.io/intro/) and [its libraries](https://honeycomb.io/docs/send-data/sdks).)
+
+At lower volumes, it may be simpler to use the standard logstash `http` output plugin and provide Honeycomb-specific values. (See here for more information about [using the standard logstash http output plugin](https://honeycomb.io/docs/send-data/connectors/logstash).)
 
 This plugin is a heavily modified version of the standard logstash [http output](https://github.com/logstash-plugins/logstash-output-http) plugin and the [Lucidworks JSON batch plugin](https://github.com/lucidworks/logstash-output-json_batch).
 
-# Usage
+## Installation
 
-Please note that the name of the plugin when used is `json_batch`, since it only supports JSON in its current form.
+The easiest way to use this plugin is by installing it through rubygems like any other logstash plugin. To get the latest version installed, you should run the following command: `bin/logstash-plugin install logstash-output-honeycomb_json_batch`
 
-The default batch size is 50, ...
+*TODO*: publish to rubygems
+
+## Usage
+
+The default batch size is 50, the default flush interval is 5 seconds, and each of those can be overridden via the plugin config.
 
 A simple config to test this might be:
 
@@ -22,16 +30,10 @@ A simple config to test this might be:
       }
     }
 
-# Installation
 
-The easiest way to use this plugin is by installing it through rubygems like any other logstash plugin. To get the latest version installed, you should run the following command: `bin/logstash-plugin install logstash-output-honeycomb_json_batch`
+## Development
 
-TODO: publish to rubygems
-
-
-# Running locally
-
-Install dependencies
+Install dependencies (this assumes you have JRuby with the Bundler gem installed.)
 
 ```
 bundle install
