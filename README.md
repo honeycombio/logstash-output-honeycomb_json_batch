@@ -8,9 +8,11 @@ This plugin is a heavily modified version of the standard logstash [http output]
 
 ## Installation
 
-The easiest way to use this plugin is by installing it through rubygems like any other logstash plugin. To get the latest version installed, you should run the following command: `bin/logstash-plugin install logstash-output-honeycomb_json_batch`
+The easiest way to use this plugin is by installing it through rubygems like any other logstash plugin. To get the latest version installed, you should run the following command:
 
-*TODO*: publish to rubygems
+```
+bin/logstash-plugin install logstash-output-honeycomb_json_batch
+```
 
 ## Usage
 
@@ -18,17 +20,19 @@ The default batch size is 50, the default flush interval is 5 seconds, and each 
 
 A simple config to test this might be:
 
-    input {
-      stdin {
-        codec => json_lines
-      }
-    }
-    output {
-      honeycomb_json_batch {
-        write_key => "YOUR_TEAM_KEY"
-        dataset => "Logstash Batch Test"
-      }
-    }
+```
+input {
+  stdin {
+    codec => json_lines
+  }
+}
+output {
+  honeycomb_json_batch {
+    write_key => "YOUR_TEAM_KEY"
+    dataset => "Logstash Batch Test"
+  }
+}
+```
 
 
 ## Development
