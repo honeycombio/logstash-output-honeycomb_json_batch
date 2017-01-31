@@ -1,4 +1,4 @@
-# logstash-output-honeycomb_json_batch [![Build Status](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch.svg?branch=master)](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch)
+# logstash-output-honeycomb_json_batch
 
 A logstash plugin for interacting with [Honeycomb](https://honeycomb.io) at high volumes. (See here for more information about [using Honeycomb](https://honeycomb.io/intro/) and [its libraries](https://honeycomb.io/docs/send-data/sdks).)
 

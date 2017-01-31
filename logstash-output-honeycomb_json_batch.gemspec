@@ -23,6 +23,4 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "logstash-mixin-http_client", ">= 2.2.1", "< 5.0.0"
 
   s.add_development_dependency 'logstash-devutils'
-  s.add_development_dependency 'sinatra'
-  s.add_development_dependency 'webrick'
 end
