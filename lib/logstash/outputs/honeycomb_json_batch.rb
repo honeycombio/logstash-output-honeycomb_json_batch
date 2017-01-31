@@ -12,7 +12,6 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
 
   config_name "honeycomb_json_batch"
 
-  # URL host to use, defaults to api.honeycomb.io
   config :api_host, :validate => :string
 
   config :write_key, :validate => :string, :required => true
@@ -25,7 +24,7 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
 
   config :retry_individual, :validate => :boolean, :default => true
 
-  config :pool_max, :validate => :number, :default => 50
+  config :pool_max, :validate => :number, :default => 10
 
   def register
     # We count outstanding requests with this queue
@@ -37,7 +36,9 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
     @total = 0
     @total_failed = 0
     @requests = Array.new
-    if !@api_host.start_with? "http"
+    if @api_host.nil?
+      @api_host = "https://api.honeycomb.io"
+    elsif !@api_host.start_with? "http"
       @api_host = "http://#{ @api_host }"
     end
     @api_host = @api_host.chomp
@@ -69,7 +70,11 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
     events.each do |event|
       data = event.to_hash()
       timestamp = data.delete("@timestamp")
-      documents.push({ "time" => timestamp, "data" => data })
+      doc = { "time" => timestamp, "data" => data }
+      if samplerate = data.delete("@samplerate")
+        doc["samplerate"] = samplerate.to_i
+      end
+      documents.push(doc)
     end
 
     make_request(documents)

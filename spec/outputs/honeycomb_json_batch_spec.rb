@@ -76,6 +76,22 @@ describe LogStash::Outputs::HoneycombJSONBatch do
     @honeycomb.buffer_flush(:force => true)
   end
 
+  it "should extract timestamp and samplerate from the data" do
+    with_samplerate = LogStash::Event.new("alpha" => 1.0, "@samplerate" => "17.5")
+    data = with_samplerate.to_hash()
+    data.delete("@timestamp")
+    data.delete("@samplerate")
+
+    expect(client).to receive(:post).
+                        with("#{ api_host }/1/batch", hash_including(:body => LogStash::Json.dump({
+                          DATASET => [ { "time" => event.timestamp.to_s, "data" => data, "samplerate" => 17 } ]
+                        }))).once.
+                        and_call_original
+
+    @honeycomb.receive(with_samplerate)
+    @honeycomb.buffer_flush(:force => true)
+  end
+
   it "should wrap multiple events up in the right structure" do
     event1 = LogStash::Event.new("alpha" => 1.0)
     event2 = LogStash::Event.new("beta" => 2.0)
