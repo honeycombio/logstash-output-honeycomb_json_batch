@@ -63,6 +63,11 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
     buffer_receive(event)
   end
 
+  def close
+    buffer_flush(:final => true)
+    client.close
+  end
+
   public
   def flush(events, close=false)
     documents = []  #this is the array of hashes that we push to Fusion as documents
@@ -119,8 +124,11 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
           :total => @total)
       else
         if documents.length > 1 && @retry_individual
-          documents.each do |doc| 
-            make_request([doc])
+          if statuses = JSON.parse(response.body).values.first
+            status.each_with_index do |status, i|
+              next if status >= 200 && status < 300
+              make_request([documents[i]])
+            end
           end
         else 
           @total_failed += documents.length
@@ -150,14 +158,14 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
       )
     end
 
-    Thread.new do 
-      client.execute!
-    end
+    client.execute!
+  rescue Exception => e
+    log_failure("Got totally unexpected exception #{e.message}", :docs => documents.length)
   end
 
   # This is split into a separate method mostly to help testing
   def log_failure(message, opts)
-    @logger.error("[HTTP Output Failure] #{message}", opts)
+    @logger.error("[Honeycomb Batch Output Failure] #{message}", opts)
   end
 
   def request_headers()
