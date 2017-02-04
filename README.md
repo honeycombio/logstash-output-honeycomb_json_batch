@@ -38,16 +38,16 @@ Additional arguments to `honeycomb_json_batch`:
 
 Consider these when tuning performance:
 
-`flush_size`: Default batch size, defaults to 50
-`idle_flush_time`: Default flush interval in seconds, defaults to 5
-`pool_max`: Maximum number of requests to be run in parallel, defaults to 10
-`retry_individual`: On failed requests, whether to retry event sends individually, defaults to true
-`api_host`: Allows you to override the Honeycomb host, defaults to https://api.honeycomb.io
+- `flush_size`: Default batch size, defaults to 50
+- `idle_flush_time`: Default flush interval in seconds, defaults to 5
+- `pool_max`: Maximum number of requests to be run in parallel, defaults to 10
+- `retry_individual`: On failed requests, whether to retry event sends individually, defaults to true
+- `api_host`: Allows you to override the Honeycomb host, defaults to https://api.honeycomb.io
 
 Special logstash fields that will be extracted:
 
-`@timestamp`: Logstash events contain timestamps by default, and this output will extract it for use as the Honeycomb timestamp
-`@samplerate`: If this special field is populated (e.g. via the `filter` section, this particular event will be weighted as `@samplerate` events in Honeycomb). See the **Sampling** section below.
+- `@timestamp`: Logstash events contain timestamps by default, and this output will extract it for use as the Honeycomb timestamp
+- `@samplerate`: If this special field is populated (e.g. via the `filter` section, this particular event will be weighted as `@samplerate` events in Honeycomb). See the **Sampling** section below.
 
 ### Sampling
 
