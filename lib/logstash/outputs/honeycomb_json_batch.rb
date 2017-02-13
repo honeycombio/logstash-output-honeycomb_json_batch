@@ -118,19 +118,25 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
     request.on_success do |response|
       if response.code >= 200 && response.code < 300
         @total = @total + documents.length
-        @logger.debug("Successfully submitted", 
+        @logger.debug("Successfully submitted",
           :docs => documents.length,
           :response_code => response.code,
           :total => @total)
       else
         if documents.length > 1 && @retry_individual
           if statuses = JSON.parse(response.body).values.first
-            status.each_with_index do |status, i|
-              next if status >= 200 && status < 300
+            statuses.each_with_index do |status, i|
+              code = status["status"]
+              if code == nil
+                @logger.warn("Status code missing in response: #{status}")
+                next
+              elsif code >= 200 && code < 300
+                next
+              end
               make_request([documents[i]])
             end
           end
-        else 
+        else
           @total_failed += documents.length
           log_failure(
               "Encountered non-200 HTTP code #{response.code}",
