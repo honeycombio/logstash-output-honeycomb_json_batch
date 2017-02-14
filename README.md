@@ -16,9 +16,7 @@ bin/logstash-plugin install logstash-output-honeycomb_json_batch
 
 ## Usage
 
-The default batch size is 50, the default flush interval is 5 seconds, and each of those can be overridden via the plugin config.
-
-A simple config to test this might be:
+A simple config is:
 
 ```
 input {
@@ -35,12 +33,7 @@ output {
 ```
 
 Additional arguments to `honeycomb_json_batch`:
-
-Consider these when tuning performance:
-
-- `flush_size`: Default batch size, defaults to 50
-- `idle_flush_time`: Default flush interval in seconds, defaults to 5
-- `pool_max`: Maximum number of requests to be run in parallel, defaults to 10
+- `flush_size`: Maximum batch size, defaults to 50
 - `retry_individual`: On failed requests, whether to retry event sends individually, defaults to true
 - `api_host`: Allows you to override the Honeycomb host, defaults to https://api.honeycomb.io
 
