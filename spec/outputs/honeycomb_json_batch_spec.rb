@@ -33,22 +33,11 @@ describe LogStash::Outputs::HoneycombJSONBatch do
 
   it "should receive a single post request" do
     expect(client).to receive(:post).
-                        with("#{ api_host }/1/batch", hash_including(:body, :headers, :async)).
+                        with("#{ api_host }/1/batch", hash_including(:body, :headers)).
                         once.
                         and_call_original
 
-    5.times {|t| @honeycomb.receive(event)}
-    @honeycomb.buffer_flush(:force => true)
-  end
-
-  it "should send batches based on the specified flush_size" do
-    expect(client).to receive(:post).
-                        with("#{ api_host }/1/batch", hash_including(:body, :headers, :async)).
-                        twice.
-                        and_call_original
-
-    (flush_size + 1).times {|t| @honeycomb.receive(event)}
-    @honeycomb.buffer_flush(:force => true)
+    @honeycomb.multi_receive([event])
   end
 
   it "should attach the right headers for Honeycomb ingestion" do
@@ -59,11 +48,10 @@ describe LogStash::Outputs::HoneycombJSONBatch do
                         })).once.
                         and_call_original
 
-    @honeycomb.receive(event)
-    @honeycomb.buffer_flush(:force => true)
+    @honeycomb.multi_receive([event])
   end
 
-  it "should wrap events in the right structure Honeycomb ingestion" do
+  it "should wrap events in the right structure for Honeycomb ingestion" do
     data = event.to_hash()
     data.delete("@timestamp")
     expect(client).to receive(:post).
@@ -72,8 +60,7 @@ describe LogStash::Outputs::HoneycombJSONBatch do
                         }))).once.
                         and_call_original
 
-    @honeycomb.receive(event)
-    @honeycomb.buffer_flush(:force => true)
+    @honeycomb.multi_receive([event])
   end
 
   it "should extract timestamp and samplerate from the data" do
@@ -88,8 +75,7 @@ describe LogStash::Outputs::HoneycombJSONBatch do
                         }))).once.
                         and_call_original
 
-    @honeycomb.receive(with_samplerate)
-    @honeycomb.buffer_flush(:force => true)
+    @honeycomb.multi_receive([with_samplerate])
   end
 
   it "should wrap multiple events up in the right structure" do
@@ -107,9 +93,16 @@ describe LogStash::Outputs::HoneycombJSONBatch do
                         }))).once.
                         and_call_original
 
-    @honeycomb.receive(event1)
-    @honeycomb.receive(event2)
-    @honeycomb.receive(event3)
-    @honeycomb.buffer_flush(:force => true)
+    @honeycomb.multi_receive([event1, event2, event3])
+  end
+
+  it "should chunk large batches" do
+    events = []
+    (1..3*@honeycomb.flush_size).each do |i|
+      events.push(LogStash::Event.new("index" => i))
+    end
+    expect(client).to receive(:post).exactly(3).times.
+        and_call_original
+    @honeycomb.multi_receive(events)
   end
 end
