@@ -99,8 +99,9 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
 
 
     # Create an async request
+    url = "#{@api_host}/1/batch"
     begin
-      request = client.post("#{@api_host}/1/batch", {
+      request = client.post(url, {
         :body => body,
         :headers => request_headers,
         :async => true
@@ -156,7 +157,7 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
         :url => url,
         :method => @http_method,
         :body => body,
-        :headers => headers,
+        :headers => request_headers,
         :message => exception.message,
         :class => exception.class.name,
         :backtrace => exception.backtrace,
