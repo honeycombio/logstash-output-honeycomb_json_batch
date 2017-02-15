@@ -21,7 +21,7 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
 
   config :retry_individual, :validate => :boolean, :default => true
 
-  config :flush_size, :validate => :number, :default => 50
+  config :flush_size, :validate => :number, :default => 75
 
   # The following configuration options are deprecated and do nothing.
   config :idle_flush_time, :validate => :number, :default => 5
