@@ -14,6 +14,10 @@ The easiest way to use this plugin is by installing it through rubygems like any
 bin/logstash-plugin install logstash-output-honeycomb_json_batch
 ```
 
+## Compatibility
+
+This plugin requires Logstash 2.4 or greater. Please open an issue if you require support for older versions.
+
 ## Usage
 
 A simple config is:
@@ -33,7 +37,7 @@ output {
 ```
 
 Additional arguments to `honeycomb_json_batch`:
-- `flush_size`: Maximum batch size, defaults to 50
+- `flush_size`: Maximum batch size, defaults to 75
 - `retry_individual`: On failed requests, whether to retry event sends individually, defaults to true
 - `api_host`: Allows you to override the Honeycomb host, defaults to https://api.honeycomb.io
 
