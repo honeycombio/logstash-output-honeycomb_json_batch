@@ -59,19 +59,19 @@ describe LogStash::Outputs::HoneycombJSONBatch do
                           DATASET => [ { "time" => event.timestamp.to_s, "data" => data } ]
                         }))).once.
                         and_call_original
-
     @honeycomb.multi_receive([event])
   end
 
   it "should extract timestamp and samplerate from the data" do
-    with_samplerate = LogStash::Event.new("alpha" => 1.0, "@samplerate" => "17.5")
+    with_samplerate = LogStash::Event.new("alpha" => 1.0, "@samplerate" => "17.5",
+                                          "@timestamp" => "2014-11-17T20:37:17.223Z")
     data = with_samplerate.to_hash()
     data.delete("@timestamp")
     data.delete("@samplerate")
 
     expect(client).to receive(:post).
                         with("#{ api_host }/1/batch", hash_including(:body => LogStash::Json.dump({
-                          DATASET => [ { "time" => event.timestamp.to_s, "data" => data, "samplerate" => 17 } ]
+                          DATASET => [ { "time" => with_samplerate.timestamp.to_s, "data" => data, "samplerate" => 17 } ]
                         }))).once.
                         and_call_original
 
