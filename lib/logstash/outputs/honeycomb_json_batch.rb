@@ -28,6 +28,8 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
 
   config :pool_max, :validate => :number, :default => 10
 
+  VERSION = "0.2.0"
+
   def register
     @total = 0
     @total_failed = 0
@@ -78,10 +80,12 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
     request.on_success do |response|
       if response.code >= 200 && response.code < 300
         @total = @total + documents.length
-        @logger.debug("Successfully submitted",
-          :docs => documents.length,
+        @logger.debug("Successfully submitted batch",
+          :num_docs => documents.length,
           :response_code => response.code,
-          :total => @total)
+          :total => @total,
+          :thread_id => Thread.current.object_id,
+          :time => Time::now.utc)
       else
         if documents.length > 1 && @retry_individual
           if statuses = JSON.parse(response.body).values.first
@@ -124,6 +128,11 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
       )
     end
 
+    @logger.debug("Submitting batch",
+          :num_docs => documents.length,
+          :total => @total,
+          :thread_id => Thread.current.object_id,
+          :time => Time::now.utc)
     request.call
 
   rescue Exception => e
@@ -138,7 +147,8 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
   def request_headers()
     {
       "Content-Type" => "application/json",
-      "X-Honeycomb-Team" => @write_key
+      "X-Honeycomb-Team" => @write_key,
+      "X-Plugin-Version" => VERSION
     }
   end
 end

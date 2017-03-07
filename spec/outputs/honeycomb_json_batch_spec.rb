@@ -44,7 +44,8 @@ describe LogStash::Outputs::HoneycombJSONBatch do
     expect(client).to receive(:post).
                         with("#{ api_host }/1/batch", hash_including(:headers => {
                           "Content-Type" => "application/json",
-                          "X-Honeycomb-Team" => WRITE_KEY
+                          "X-Honeycomb-Team" => WRITE_KEY,
+                          "X-Plugin-Version" => LogStash::Outputs::HoneycombJSONBatch::VERSION
                         })).once.
                         and_call_original
 
