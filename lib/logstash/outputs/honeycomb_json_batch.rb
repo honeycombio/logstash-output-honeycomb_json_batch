@@ -69,9 +69,9 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
   private
 
   def make_request(documents)
-    body = LogStash::Json.dump({ @dataset => documents })
+    body = LogStash::Json.dump(documents)
 
-    url = "#{@api_host}/1/batch"
+    url = "#{@api_host}/1/batch/#{@dataset}"
     request = client.post(url, {
       :body => body,
       :headers => request_headers
