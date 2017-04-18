@@ -33,7 +33,7 @@ describe LogStash::Outputs::HoneycombJSONBatch do
 
   it "should receive a single post request" do
     expect(client).to receive(:post).
-                        with("#{ api_host }/1/batch", hash_including(:body, :headers)).
+                        with("#{ api_host }/1/batch/#{DATASET}", hash_including(:body, :headers)).
                         once.
                         and_call_original
 
@@ -42,7 +42,7 @@ describe LogStash::Outputs::HoneycombJSONBatch do
 
   it "should attach the right headers for Honeycomb ingestion" do
     expect(client).to receive(:post).
-                        with("#{ api_host }/1/batch", hash_including(:headers => {
+                        with("#{ api_host }/1/batch/#{DATASET}", hash_including(:headers => {
                           "Content-Type" => "application/json",
                           "X-Honeycomb-Team" => WRITE_KEY,
                           "X-Plugin-Version" => LogStash::Outputs::HoneycombJSONBatch::VERSION
@@ -56,9 +56,9 @@ describe LogStash::Outputs::HoneycombJSONBatch do
     data = event.to_hash()
     data.delete("@timestamp")
     expect(client).to receive(:post).
-                        with("#{ api_host }/1/batch", hash_including(:body => LogStash::Json.dump({
-                          DATASET => [ { "time" => event.timestamp.to_s, "data" => data } ]
-                        }))).once.
+                        with("#{ api_host }/1/batch/#{DATASET}", hash_including(:body => LogStash::Json.dump(
+                          [ { "time" => event.timestamp.to_s, "data" => data } ]
+                        ))).once.
                         and_call_original
     @honeycomb.multi_receive([event])
   end
@@ -71,9 +71,9 @@ describe LogStash::Outputs::HoneycombJSONBatch do
     data.delete("@samplerate")
 
     expect(client).to receive(:post).
-                        with("#{ api_host }/1/batch", hash_including(:body => LogStash::Json.dump({
-                          DATASET => [ { "time" => with_samplerate.timestamp.to_s, "data" => data, "samplerate" => 17 } ]
-                        }))).once.
+                        with("#{ api_host }/1/batch/#{DATASET}", hash_including(:body => LogStash::Json.dump(
+                          [ { "time" => with_samplerate.timestamp.to_s, "data" => data, "samplerate" => 17 } ]
+                        ))).once.
                         and_call_original
 
     @honeycomb.multi_receive([with_samplerate])
@@ -85,13 +85,13 @@ describe LogStash::Outputs::HoneycombJSONBatch do
     event3 = LogStash::Event.new("gamma" => 3.0)
 
     expect(client).to receive(:post).
-                        with("#{ api_host }/1/batch", hash_including(:body => LogStash::Json.dump({
-                          DATASET => [
+                        with("#{ api_host }/1/batch/#{DATASET}", hash_including(:body => LogStash::Json.dump(
+                          [
                             { "time" => event1.timestamp.to_s, "data" => { "alpha" => 1.0, "@version" => "1" } },
                             { "time" => event2.timestamp.to_s, "data" => { "@version" => "1", "beta" => 2.0 } },
                             { "time" => event3.timestamp.to_s, "data" => { "@version" => "1", "gamma" => 3.0 } }
                           ]
-                        }))).once.
+                        ))).once.
                         and_call_original
 
     @honeycomb.multi_receive([event1, event2, event3])
