@@ -1,8 +1,8 @@
 # logstash-output-honeycomb_json_batch [![Gem Version](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch.svg)](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch)
 
-A logstash plugin for interacting with [Honeycomb](https://honeycomb.io) at high volumes. (See here for more information about [using Honeycomb](https://honeycomb.io/intro/) and [its libraries](https://honeycomb.io/docs/send-data/sdks).)
+A logstash plugin for interacting with [Honeycomb](https://honeycomb.io) at high volumes. (For more information about using Honeycomb, see [our docs](https://honeycomb.io/docs/).)
 
-At lower volumes, it may be simpler to use the standard logstash `http` output plugin and provide Honeycomb-specific values. (See here for more information about [using the standard logstash http output plugin](https://honeycomb.io/docs/send-data/connectors/logstash).)
+At lower volumes, it may be simpler to use the standard logstash `http` output plugin and provide Honeycomb-specific values. (See here for more information about [using the standard logstash http output plugin](https://honeycomb.io/docs/connect/logstash/).)
 
 This plugin is a heavily modified version of the standard logstash [http output](https://github.com/logstash-plugins/logstash-output-http) plugin and the [Lucidworks JSON batch plugin](https://github.com/lucidworks/logstash-output-json_batch).
 
