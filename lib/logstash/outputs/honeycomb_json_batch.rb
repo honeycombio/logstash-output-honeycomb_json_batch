@@ -28,7 +28,7 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
 
   config :pool_max, :validate => :number, :default => 10
 
-  VERSION = "0.3.0"
+  VERSION = "0.4.0"
 
   def register
     @total = 0
