@@ -1,4 +1,7 @@
-# logstash-output-honeycomb_json_batch [![Gem Version](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch.svg)](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch)
+# logstash-output-honeycomb_json_batch
+
+[![Build Status](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch.svg?branch=master)](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch)
+[![Gem Version](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch.svg)](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch)
 
 A logstash plugin for interacting with [Honeycomb](https://honeycomb.io) at high volumes. (For more information about using Honeycomb, see [our docs](https://honeycomb.io/docs/).)
 
@@ -99,6 +102,6 @@ Travis will upload tagged releases to Rubygems. To release a new version
 
 1. Bump the value of `VERSION` in `lib/logstash/outputs/honeycomb_json_batch.rb`
 2. Bump the version in `logstash-output-honeycomb_json_batch.gemspec`
-3. Commit changes and run `git tag v0.3.2` (for example)
+3. Commit changes and run `git tag v0.3.2 -m v0.3.2` (for example)
 4. `git push --follow-tags`
 5. Make sure the build succeeds.
