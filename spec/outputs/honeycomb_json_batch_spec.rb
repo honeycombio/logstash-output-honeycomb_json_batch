@@ -87,7 +87,7 @@ describe LogStash::Outputs::HoneycombJSONBatch do
     expect(client).to receive(:post).
                         with("#{ api_host }/1/batch/#{DATASET}", hash_including(:body => LogStash::Json.dump(
                           [
-                            { "time" => event1.timestamp.to_s, "data" => { "alpha" => 1.0, "@version" => "1" } },
+                            { "time" => event1.timestamp.to_s, "data" => { "@version" => "1", "alpha" => 1.0 } },
                             { "time" => event2.timestamp.to_s, "data" => { "@version" => "1", "beta" => 2.0 } },
                             { "time" => event3.timestamp.to_s, "data" => { "@version" => "1", "gamma" => 3.0 } }
                           ]
