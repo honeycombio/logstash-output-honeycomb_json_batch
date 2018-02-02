@@ -3,7 +3,7 @@ language: ruby
 jdk: openjdk8
 
 rvm:
-  - jruby-19mode
+  - jruby-9.1.9.0
 
 script:
   - bundle exec rspec spec
