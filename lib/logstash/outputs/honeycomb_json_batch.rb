@@ -39,6 +39,8 @@ class LogStash::Outputs::HoneycombJSONBatch < LogStash::Outputs::Base
       @api_host = "http://#{ @api_host }"
     end
     @api_host = @api_host.chomp
+    
+    @dataset = URI::encode(@dataset)
 
     logger.info("Initialized honeycomb_json_batch with settings",
       :api_host => @api_host,
