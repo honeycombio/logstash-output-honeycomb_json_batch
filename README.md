@@ -1,5 +1,7 @@
 # logstash-output-honeycomb_json_batch
 
+[![OSS Lifecycle](https://img.shields.io/osslifecycle/honeycombio/REPO)](https://github.com/honeycombio/home/blob/main/honeycomb-oss-lifecycle-and-practices.md)
+
 [![Build Status](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch.svg?branch=master)](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch)
 [![Gem Version](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch.svg)](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch)
 
