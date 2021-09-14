@@ -1,7 +1,6 @@
 # logstash-output-honeycomb_json_batch
 
 [![OSS Lifecycle](https://img.shields.io/osslifecycle/honeycombio/logstash-output-honeycomb_json_batch)](https://github.com/honeycombio/home/blob/main/honeycomb-oss-lifecycle-and-practices.md)
-[![Build Status](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch.svg?branch=master)](https://travis-ci.org/honeycombio/logstash-output-honeycomb_json_batch)
 [![Gem Version](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch.svg)](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch)
 
 A logstash plugin for interacting with [Honeycomb](https://honeycomb.io) at high volumes. (For more information about using Honeycomb, see [our docs](https://honeycomb.io/docs/).)
