@@ -1,9 +1,13 @@
 # logstash-output-honeycomb_json_batch
 
-[![OSS Lifecycle](https://img.shields.io/osslifecycle/honeycombio/logstash-output-honeycomb_json_batch?color=pink)](https://github.com/honeycombio/home/blob/main/honeycomb-oss-lifecycle-and-practices.md)
+[![OSS Lifecycle](https://img.shields.io/osslifecycle/honeycombio/logstash-output-honeycomb_json_batch)](https://github.com/honeycombio/home/blob/main/honeycomb-oss-lifecycle-and-practices.md)
 [![Gem Version](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch.svg)](https://badge.fury.io/rb/logstash-output-honeycomb_json_batch)
 
-**STATUS: this project is being sunset.** [See https://github.com/honeycombio/logstash-output-honeycomb_json_batch/issues/16](https://github.com/honeycombio/logstash-output-honeycomb_json_batch/issues/16)
+**STATUS: this project is [archived](https://github.com/honeycombio/home/blob/main/honeycomb-oss-lifecycle-and-practices.md).** You can learn about connecting Logstash to Honeycomb in our [docs](https://docs.honeycomb.io/getting-data-in/logs/log-collectors/logstash/).
+
+Questions? You can chat with us in the **Honeycomb Pollinators** Slack. You can find a direct link to request an invite in [Spread the Love: Appreciating Our Pollinators Community](https://www.honeycomb.io/blog/spread-the-love-appreciating-our-pollinators-community/).
+
+---
 
 A logstash plugin for interacting with [Honeycomb](https://honeycomb.io) at high volumes. (For more information about using Honeycomb, see [our docs](https://honeycomb.io/docs/).)
 
